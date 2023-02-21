@@ -41,6 +41,8 @@ namespace WinFormsApp1
         private const string Saves = @"C:\Users\marho\OneDrive\Документы\My Games\They Are Billions\Saves";
         private void Load()
         {
+            foreach (var f in GetSaveFiles())
+                File.Delete(f);
             string frame = GetCurrentFrame();
             foreach (var f in Directory.GetFiles(frame))
             {
@@ -50,9 +52,7 @@ namespace WinFormsApp1
 
         private void Save()
         {
-            var files = GetCurrentSaves(4) 
-                ?? GetCurrentSaves(2) 
-                ?? throw new InvalidOperationException();
+            var files = GetSaveFiles();
             var target = Path.Combine(Backup,
                 Path.GetFileNameWithoutExtension(files[0]));
             if (!Directory.Exists(target))
@@ -64,6 +64,14 @@ namespace WinFormsApp1
             {
                 File.Copy(f, Path.Combine(frame, Path.GetFileName(f)), false);
             }
+        }
+
+        private static List<string> GetSaveFiles()
+        {
+            var files = GetCurrentSaves(4)
+                        ?? GetCurrentSaves(2)
+                        ?? throw new InvalidOperationException();
+            return files;
         }
 
         private static List<string>? GetCurrentSaves(int num)
@@ -98,8 +106,7 @@ namespace WinFormsApp1
         {
             return Directory
                 .GetDirectories(Directory.GetDirectories(Backup).Last())
-                .Where(d => !Path.GetFileName(d).StartsWith("_"))
-                .Last();
+                .Last(d => !Path.GetFileName(d).StartsWith("_"));
         }
 
         private static bool IsCurrentProcessTheyAreBillions()
