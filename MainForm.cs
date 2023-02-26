@@ -1,18 +1,18 @@
-﻿using NHotkey.WindowsForms;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using NHotkey.WindowsForms;
 using Vanara.PInvoke;
 
-namespace WinFormsApp1
+namespace TheyAreBillions
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
             HotkeyManager.Current.AddOrReplace("Save",
                 Keys.F5,
-                (s, e) =>
+                (_, _) =>
                 {
                     if (IsCurrentProcessTheyAreBillions())
                         Save();
@@ -20,37 +20,50 @@ namespace WinFormsApp1
 
             HotkeyManager.Current.AddOrReplace("Remove Last",
                 Keys.Control | Keys.Alt | Keys.R,
-                (s, e) =>
+                (_, _) =>
                 {
                     if (IsCurrentProcessTheyAreBillions())
                         Remove();
                 });
 
-            HotkeyManager.Current.AddOrReplace("Load",
+            HotkeyManager.Current.AddOrReplace("LoadGame",
                 Keys.F8,
-                (s, e) =>
+                (_, _) =>
                 {
                     if (IsCurrentProcessTheyAreBillions())
-                        Load();
+                        LoadGame();
                 });
+            var timer = new System.Windows.Forms.Timer();
+            timer.Interval = 1000;
+            timer.Tick += (_, _) => RefreshState();
+            timer.Start();
+        }
 
+        private void RefreshState()
+        {
+            var saveFiles = GetCurrentSaves(2)!;
+            var currentFrame = GetCurrentFrame();
+            var backupFiles = Directory.GetFiles(currentFrame);
+            var m = saveFiles.Zip(backupFiles)
+                .All(x => File.ReadAllBytes(x.First)
+                    .SequenceEqual(File.ReadAllBytes(x.Second)));
+            _match.Text = m ? "clean" : "dirty";
+            _name.Text= Path.GetFileName(currentFrame);
         }
 
 
         private const string Backup = @"C:\Users\marho\OneDrive\TheyAreBillions";
         private const string Saves = @"C:\Users\marho\OneDrive\Документы\My Games\They Are Billions\Saves";
-        private void Load()
+        private static void LoadGame()
         {
             foreach (var f in GetSaveFiles())
                 File.Delete(f);
-            string frame = GetCurrentFrame();
-            foreach (var f in Directory.GetFiles(frame))
-            {
+            var frame = GetCurrentFrame();
+            foreach (var f in Directory.GetFiles(frame)) 
                 File.Copy(f, f.Replace(frame, Saves), true);
-            }
         }
 
-        private void Save()
+        private static void Save()
         {
             var files = GetSaveFiles();
             var target = Path.Combine(Backup,
@@ -66,13 +79,10 @@ namespace WinFormsApp1
             }
         }
 
-        private static List<string> GetSaveFiles()
-        {
-            var files = GetCurrentSaves(4)
-                        ?? GetCurrentSaves(2)
-                        ?? throw new InvalidOperationException();
-            return files;
-        }
+        private static List<string> GetSaveFiles() =>
+            GetCurrentSaves(4) ??
+            GetCurrentSaves(2) ?? 
+            throw new InvalidOperationException();
 
         private static List<string>? GetCurrentSaves(int num)
         {
@@ -94,26 +104,24 @@ namespace WinFormsApp1
             return true;
         }
 
-        private void Remove()
+        private static void Remove()
         {
-            string frame = GetCurrentFrame();
+            var frame = GetCurrentFrame();
             Directory.Move(frame, Path.Combine(
                 Path.GetDirectoryName(frame)!,
                 "_" + Path.GetFileName(frame)));
         }
 
-        private static string GetCurrentFrame()
-        {
-            return Directory
+        private static string GetCurrentFrame() =>
+            Directory
                 .GetDirectories(Directory.GetDirectories(Backup).Last())
                 .Last(d => !Path.GetFileName(d).StartsWith("_"));
-        }
 
         private static bool IsCurrentProcessTheyAreBillions()
         {
-            HWND activeWindowHandle = User32.GetForegroundWindow();
+            var activeWindowHandle = User32.GetForegroundWindow();
             User32.GetWindowThreadProcessId(activeWindowHandle, out var threadProcessId);
-            var activeProcess = Process.GetProcesses()?
+            var activeProcess = Process.GetProcesses()
                 .SingleOrDefault(p => p.Id == threadProcessId);
             return activeProcess?.ProcessName == "TheyAreBillions";
         }

@@ -1,2 +1,4 @@
-﻿ApplicationConfiguration.Initialize();
-Application.Run(new WinFormsApp1.Form1());
+﻿using TheyAreBillions;
+
+ApplicationConfiguration.Initialize();
+Application.Run(new MainForm());
