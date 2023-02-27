@@ -48,7 +48,7 @@ namespace TheyAreBillions
                 .All(x => File.ReadAllBytes(x.First)
                     .SequenceEqual(File.ReadAllBytes(x.Second)));
             _match.Text = m ? "clean" : "dirty";
-            _name.Text= Path.GetFileName(currentFrame);
+            _name.Text = Path.GetFileName(currentFrame);
         }
 
 
@@ -59,7 +59,7 @@ namespace TheyAreBillions
             foreach (var f in GetSaveFiles())
                 File.Delete(f);
             var frame = GetCurrentFrame();
-            foreach (var f in Directory.GetFiles(frame)) 
+            foreach (var f in Directory.GetFiles(frame))
                 File.Copy(f, f.Replace(frame, Saves), true);
         }
 
@@ -81,7 +81,7 @@ namespace TheyAreBillions
 
         private static List<string> GetSaveFiles() =>
             GetCurrentSaves(4) ??
-            GetCurrentSaves(2) ?? 
+            GetCurrentSaves(2) ??
             throw new InvalidOperationException();
 
         private static List<string>? GetCurrentSaves(int num)
