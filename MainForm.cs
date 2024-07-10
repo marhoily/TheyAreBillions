@@ -53,14 +53,14 @@ namespace TheyAreBillions
             if (saveFiles == null)
             {
                 _folderName.Text = @"<N/A>";
-                _isDirty.Text = "";
+                MarkClean();
                 _frameName.Text = "";
                 return;
             }
             var currentFrame = GetCurrentFrame();
             if (currentFrame == null)
             {
-                _isDirty.Text = @"<empty>";
+                MarkClean();
                 var frame = saveFiles.First();
                 _frameName.Text = Path.GetFileNameWithoutExtension(frame);
                 return;
@@ -70,8 +70,20 @@ namespace TheyAreBillions
             var m = saveFiles.Zip(backupFiles)
                 .All(x => File.ReadAllBytes(x.First)
                     .SequenceEqual(File.ReadAllBytes(x.Second)));
-            _isDirty.Text = m ? "clean" : "dirty";
+            if (m) MarkClean(); else MarkDirty();
             _frameName.Text = Path.GetFileName(currentFrame);
+        }
+
+        private void MarkDirty()
+        {
+            _isDirty.Text = "Dirty";
+            _frameName.ForeColor = Color.DarkSalmon;
+        }
+
+        private void MarkClean()
+        {
+            _isDirty.Text = "Clean";
+            _frameName.ForeColor = Color.AliceBlue;
         }
 
 

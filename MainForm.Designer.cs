@@ -40,24 +40,25 @@
             // 
             _isDirty.AutoSize = true;
             _isDirty.Dock = DockStyle.Fill;
-            _isDirty.Location = new Point(757, 866);
+            _isDirty.Location = new Point(757, 1182);
             _isDirty.Name = "_isDirty";
-            _isDirty.Size = new Size(748, 435);
+            _isDirty.Size = new Size(748, 119);
             _isDirty.TabIndex = 1;
             _isDirty.Text = "Clean";
             _isDirty.TextAlign = ContentAlignment.TopCenter;
+            _isDirty.Visible = false;
             // 
             // _frameName
             // 
             _frameName.AutoSize = true;
             _frameName.Dock = DockStyle.Fill;
             _frameName.Font = new Font("SimSun", 72F, FontStyle.Regular, GraphicsUnit.Point);
-            _frameName.Location = new Point(757, 433);
+            _frameName.Location = new Point(757, 591);
             _frameName.Name = "_frameName";
-            _frameName.Size = new Size(748, 433);
+            _frameName.Size = new Size(748, 591);
             _frameName.TabIndex = 1;
             _frameName.Text = "007";
-            _frameName.TextAlign = ContentAlignment.MiddleCenter;
+            _frameName.TextAlign = ContentAlignment.TopCenter;
             // 
             // _folderName
             // 
@@ -66,17 +67,17 @@
             _folderName.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
             _folderName.Location = new Point(757, 0);
             _folderName.Name = "_folderName";
-            _folderName.Size = new Size(748, 433);
+            _folderName.Size = new Size(748, 591);
             _folderName.TabIndex = 1;
             _folderName.Text = "ilya45";
-            _folderName.TextAlign = ContentAlignment.MiddleCenter;
+            _folderName.TextAlign = ContentAlignment.BottomCenter;
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
             tableLayoutPanel1.Controls.Add(_folderName, 1, 0);
             tableLayoutPanel1.Controls.Add(_frameName, 1, 1);
             tableLayoutPanel1.Controls.Add(_isDirty, 1, 2);
@@ -84,10 +85,9 @@
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 45.4545441F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 45.45455F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090908F));
             tableLayoutPanel1.Size = new Size(2264, 1301);
             tableLayoutPanel1.TabIndex = 2;
             // 
