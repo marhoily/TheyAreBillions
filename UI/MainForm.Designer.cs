@@ -1,4 +1,4 @@
-﻿namespace TheyAreBillions
+﻿namespace UI
 {
     partial class MainForm
     {

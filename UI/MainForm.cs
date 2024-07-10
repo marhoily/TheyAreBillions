@@ -3,7 +3,7 @@ using NHotkey.WindowsForms;
 using Polly;
 using Vanara.PInvoke;
 
-namespace TheyAreBillions
+namespace UI
 {
     public partial class MainForm : Form
     {
