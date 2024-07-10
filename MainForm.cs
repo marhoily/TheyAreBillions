@@ -41,8 +41,23 @@ namespace TheyAreBillions
 
         private void RefreshState()
         {
-            var saveFiles = GetCurrentSaves(2)!;
+            var saveFiles = GetSaveFiles()?.Take(2);
+            if (saveFiles == null)
+            {
+                _gameName.Text = @"<N/A>";
+                _match.Text = "";
+                _name.Text = "";
+                return;
+            }
             var currentFrame = GetCurrentFrame();
+            if (currentFrame == null)
+            {
+                _match.Text = @"<empty>";
+                var frame = saveFiles.First();
+                _name.Text = Path.GetFileNameWithoutExtension(frame);
+                return;
+            }
+            _gameName.Text = Path.GetFileName(Path.GetDirectoryName(currentFrame));
             var backupFiles = Directory.GetFiles(currentFrame);
             var m = saveFiles.Zip(backupFiles)
                 .All(x => File.ReadAllBytes(x.First)
@@ -56,9 +71,12 @@ namespace TheyAreBillions
         private const string Saves = @"C:\Users\marho\OneDrive\Документы\My Games\They Are Billions\Saves";
         private static void LoadGame()
         {
-            foreach (var f in GetSaveFiles())
-                File.Delete(f);
+            var saveFiles = GetSaveFiles();
+            if (saveFiles != null) 
+                foreach (var f in saveFiles)
+                    File.Delete(f);
             var frame = GetCurrentFrame();
+            if (frame == null) return;
             foreach (var f in Directory.GetFiles(frame))
                 File.Copy(f, f.Replace(frame, Saves), true);
         }
@@ -66,6 +84,7 @@ namespace TheyAreBillions
         private static void Save()
         {
             var files = GetSaveFiles();
+            if (files == null) return;
             var target = Path.Combine(Backup,
                 Path.GetFileNameWithoutExtension(files[0]));
             if (!Directory.Exists(target))
@@ -79,17 +98,19 @@ namespace TheyAreBillions
             }
         }
 
-        private static List<string> GetSaveFiles() =>
+        private static List<string>? GetSaveFiles() =>
             GetCurrentSaves(4) ??
-            GetCurrentSaves(2) ??
-            throw new InvalidOperationException();
+            GetCurrentSaves(2);
 
         private static List<string>? GetCurrentSaves(int num)
         {
-            var result = Directory.EnumerateFiles(Saves)
+            var enumerateFiles = Directory.EnumerateFiles(Saves)
+                .ToArray();
+            var result = enumerateFiles
                 .Where(f => !f.EndsWith("steam_autocloud.vdf"))
                 .TakeLast(num)
                 .ToList();
+            if (result.Count == 0) return null;
             var prefix = Path.GetFileNameWithoutExtension(result[0]);
             return AllFilesHaveSamePrefix(result, prefix) ? result : null;
         }
@@ -107,15 +128,19 @@ namespace TheyAreBillions
         private static void Remove()
         {
             var frame = GetCurrentFrame();
+            if (frame == null) return;
             Directory.Move(frame, Path.Combine(
                 Path.GetDirectoryName(frame)!,
                 "_" + Path.GetFileName(frame)));
         }
 
-        private static string GetCurrentFrame() =>
-            Directory
-                .GetDirectories(Directory.GetDirectories(Backup).Last())
-                .Last(d => !Path.GetFileName(d).StartsWith("_"));
+        private static string? GetCurrentFrame()
+        {
+            var last = Directory.GetDirectories(Backup).Last();
+            return Directory
+                .GetDirectories(last)
+                .LastOrDefault(d => !Path.GetFileName(d).StartsWith("_"));
+        }
 
         private static bool IsCurrentProcessTheyAreBillions()
         {

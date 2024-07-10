@@ -34,12 +34,13 @@
             label3 = new Label();
             _match = new Label();
             _name = new Label();
+            _gameName = new Label();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(22, 24);
+            label1.Location = new Point(26, 21);
             label1.Name = "label1";
             label1.Size = new Size(195, 57);
             label1.TabIndex = 0;
@@ -48,7 +49,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(22, 91);
+            label2.Location = new Point(26, 88);
             label2.Name = "label2";
             label2.Size = new Size(309, 57);
             label2.TabIndex = 0;
@@ -57,7 +58,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(22, 165);
+            label3.Location = new Point(26, 162);
             label3.Name = "label3";
             label3.Size = new Size(559, 57);
             label3.TabIndex = 0;
@@ -66,7 +67,7 @@
             // _match
             // 
             _match.AutoSize = true;
-            _match.Location = new Point(22, 231);
+            _match.Location = new Point(26, 284);
             _match.Name = "_match";
             _match.Size = new Size(136, 57);
             _match.TabIndex = 1;
@@ -75,11 +76,20 @@
             // _name
             // 
             _name.AutoSize = true;
-            _name.Location = new Point(22, 297);
+            _name.Location = new Point(26, 350);
             _name.Name = "_name";
             _name.Size = new Size(136, 57);
             _name.TabIndex = 1;
             _name.Text = "label4";
+            // 
+            // _gameName
+            // 
+            _gameName.AutoSize = true;
+            _gameName.Location = new Point(26, 227);
+            _gameName.Name = "_gameName";
+            _gameName.Size = new Size(136, 57);
+            _gameName.TabIndex = 1;
+            _gameName.Text = "label4";
             // 
             // MainForm
             // 
@@ -87,6 +97,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(_name);
+            Controls.Add(_gameName);
             Controls.Add(_match);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -105,5 +116,6 @@
         private Label label3;
         private Label _match;
         private Label _name;
+        private Label _gameName;
     }
 }
