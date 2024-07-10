@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using NHotkey.WindowsForms;
+using Polly;
 using Vanara.PInvoke;
 
 namespace TheyAreBillions
@@ -8,6 +9,13 @@ namespace TheyAreBillions
     {
         public MainForm()
         {
+            var retryTillSuccess = new ResiliencePipelineBuilder().AddRetry(new()
+            {
+                ShouldHandle = new PredicateBuilder().Handle<Exception>(),
+                MaxRetryAttempts = int.MaxValue, // Retry indefinitely
+                Delay = TimeSpan.FromMilliseconds(200),
+              
+            }).Build();
             InitializeComponent();
 
             HotkeyManager.Current.AddOrReplace("Save",
@@ -15,7 +23,7 @@ namespace TheyAreBillions
                 (_, _) =>
                 {
                     if (IsCurrentProcessTheyAreBillions())
-                        Save();
+                        retryTillSuccess.Execute(Save);
                 });
 
             HotkeyManager.Current.AddOrReplace("Remove Last",
