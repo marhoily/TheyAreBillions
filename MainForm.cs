@@ -14,7 +14,7 @@ namespace TheyAreBillions
                 ShouldHandle = new PredicateBuilder().Handle<Exception>(),
                 MaxRetryAttempts = int.MaxValue, // Retry indefinitely
                 Delay = TimeSpan.FromMilliseconds(200),
-              
+
             }).Build();
             InitializeComponent();
 
@@ -161,6 +161,7 @@ namespace TheyAreBillions
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Location = new Point(8960, 2525);
             TopMost = true;
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
