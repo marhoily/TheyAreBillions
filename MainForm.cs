@@ -44,26 +44,26 @@ namespace TheyAreBillions
             var saveFiles = GetSaveFiles()?.Take(2);
             if (saveFiles == null)
             {
-                _gameName.Text = @"<N/A>";
-                _match.Text = "";
-                _name.Text = "";
+                _folderName.Text = @"<N/A>";
+                _isDirty.Text = "";
+                _frameName.Text = "";
                 return;
             }
             var currentFrame = GetCurrentFrame();
             if (currentFrame == null)
             {
-                _match.Text = @"<empty>";
+                _isDirty.Text = @"<empty>";
                 var frame = saveFiles.First();
-                _name.Text = Path.GetFileNameWithoutExtension(frame);
+                _frameName.Text = Path.GetFileNameWithoutExtension(frame);
                 return;
             }
-            _gameName.Text = Path.GetFileName(Path.GetDirectoryName(currentFrame));
+            _folderName.Text = Path.GetFileName(Path.GetDirectoryName(currentFrame));
             var backupFiles = Directory.GetFiles(currentFrame);
             var m = saveFiles.Zip(backupFiles)
                 .All(x => File.ReadAllBytes(x.First)
                     .SequenceEqual(File.ReadAllBytes(x.Second)));
-            _match.Text = m ? "clean" : "dirty";
-            _name.Text = Path.GetFileName(currentFrame);
+            _isDirty.Text = m ? "clean" : "dirty";
+            _frameName.Text = Path.GetFileName(currentFrame);
         }
 
 
@@ -72,7 +72,7 @@ namespace TheyAreBillions
         private static void LoadGame()
         {
             var saveFiles = GetSaveFiles();
-            if (saveFiles != null) 
+            if (saveFiles != null)
                 foreach (var f in saveFiles)
                     File.Delete(f);
             var frame = GetCurrentFrame();
@@ -149,6 +149,13 @@ namespace TheyAreBillions
             var activeProcess = Process.GetProcesses()
                 .SingleOrDefault(p => p.Id == threadProcessId);
             return activeProcess?.ProcessName == "TheyAreBillions";
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            TopMost = true;
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
         }
     }
 }

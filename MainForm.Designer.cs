@@ -29,93 +29,89 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            _match = new Label();
-            _name = new Label();
-            _gameName = new Label();
+            _isDirty = new Label();
+            _frameName = new Label();
+            _folderName = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // _isDirty
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(26, 21);
-            label1.Name = "label1";
-            label1.Size = new Size(195, 57);
-            label1.TabIndex = 0;
-            label1.Text = "F5 - Save";
+            _isDirty.AutoSize = true;
+            _isDirty.Dock = DockStyle.Fill;
+            _isDirty.Location = new Point(757, 866);
+            _isDirty.Name = "_isDirty";
+            _isDirty.Size = new Size(748, 435);
+            _isDirty.TabIndex = 1;
+            _isDirty.Text = "Clean";
+            _isDirty.TextAlign = ContentAlignment.TopCenter;
             // 
-            // label2
+            // _frameName
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(26, 88);
-            label2.Name = "label2";
-            label2.Size = new Size(309, 57);
-            label2.TabIndex = 0;
-            label2.Text = "F8 - LoadGame";
+            _frameName.AutoSize = true;
+            _frameName.Dock = DockStyle.Fill;
+            _frameName.Font = new Font("SimSun", 72F, FontStyle.Regular, GraphicsUnit.Point);
+            _frameName.Location = new Point(757, 433);
+            _frameName.Name = "_frameName";
+            _frameName.Size = new Size(748, 433);
+            _frameName.TabIndex = 1;
+            _frameName.Text = "007";
+            _frameName.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label3
+            // _folderName
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(26, 162);
-            label3.Name = "label3";
-            label3.Size = new Size(559, 57);
-            label3.TabIndex = 0;
-            label3.Text = "Crl+Alt+R - remove last save";
+            _folderName.AutoSize = true;
+            _folderName.Dock = DockStyle.Fill;
+            _folderName.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
+            _folderName.Location = new Point(757, 0);
+            _folderName.Name = "_folderName";
+            _folderName.Size = new Size(748, 433);
+            _folderName.TabIndex = 1;
+            _folderName.Text = "ilya45";
+            _folderName.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // _match
+            // tableLayoutPanel1
             // 
-            _match.AutoSize = true;
-            _match.Location = new Point(26, 284);
-            _match.Name = "_match";
-            _match.Size = new Size(136, 57);
-            _match.TabIndex = 1;
-            _match.Text = "label4";
-            // 
-            // _name
-            // 
-            _name.AutoSize = true;
-            _name.Location = new Point(26, 350);
-            _name.Name = "_name";
-            _name.Size = new Size(136, 57);
-            _name.TabIndex = 1;
-            _name.Text = "label4";
-            // 
-            // _gameName
-            // 
-            _gameName.AutoSize = true;
-            _gameName.Location = new Point(26, 227);
-            _gameName.Name = "_gameName";
-            _gameName.Size = new Size(136, 57);
-            _gameName.TabIndex = 1;
-            _gameName.Text = "label4";
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            tableLayoutPanel1.Controls.Add(_folderName, 1, 0);
+            tableLayoutPanel1.Controls.Add(_frameName, 1, 1);
+            tableLayoutPanel1.Controls.Add(_isDirty, 1, 2);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new Size(2264, 1301);
+            tableLayoutPanel1.TabIndex = 2;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(23F, 57F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(_name);
-            Controls.Add(_gameName);
-            Controls.Add(_match);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            BackColor = Color.Black;
+            ClientSize = new Size(2264, 1301);
+            Controls.Add(tableLayoutPanel1);
+            ForeColor = Color.FromArgb(224, 224, 224);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
             Text = "Backup Catcher";
+            Load += MainForm_Load;
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label _match;
-        private Label _name;
-        private Label _gameName;
+        private Label _isDirty;
+        private Label _frameName;
+        private Label _folderName;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }
