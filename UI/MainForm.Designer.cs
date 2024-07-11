@@ -29,24 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            _isDirty = new Label();
             _frameName = new Label();
             _folderName = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // _isDirty
-            // 
-            _isDirty.AutoSize = true;
-            _isDirty.Dock = DockStyle.Fill;
-            _isDirty.Location = new Point(757, 1182);
-            _isDirty.Name = "_isDirty";
-            _isDirty.Size = new Size(748, 119);
-            _isDirty.TabIndex = 1;
-            _isDirty.Text = "Clean";
-            _isDirty.TextAlign = ContentAlignment.TopCenter;
-            _isDirty.Visible = false;
             // 
             // _frameName
             // 
@@ -80,7 +67,6 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
             tableLayoutPanel1.Controls.Add(_folderName, 1, 0);
             tableLayoutPanel1.Controls.Add(_frameName, 1, 1);
-            tableLayoutPanel1.Controls.Add(_isDirty, 1, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -109,7 +95,6 @@
         }
 
         #endregion
-        private Label _isDirty;
         private Label _frameName;
         private Label _folderName;
         private TableLayoutPanel tableLayoutPanel1;
