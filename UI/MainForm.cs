@@ -1,6 +1,6 @@
 ﻿using NHotkey.WindowsForms;
 using Polly;
-using Shared;
+
 
 namespace UI
 {
@@ -18,10 +18,6 @@ namespace UI
 
             }).Build();
 
-            var ssm = new SaveStateManager(
-                () => _isDirty, UpdateColor, 
-                () => retryTillSuccess.Execute(Lib.Save));
-
             InitializeComponent();
 
             HotkeyManager.Current.AddOrReplace("Save",
@@ -29,7 +25,7 @@ namespace UI
                 (_, _) =>
                 {
                     if (Lib.IsCurrentProcessTheyAreBillions())
-                        ssm.RequestSave();
+                        Lib.Save();
                 });
 
             HotkeyManager.Current.AddOrReplace("Remove Last",
@@ -52,21 +48,12 @@ namespace UI
             timer.Tick += (_, _) =>
             {
                 RefreshState();
-                ssm.Tick();
+                _frameName.ForeColor = _isDirty ?  
+                    Color.DarkSalmon : Color.Aqua;
             };
             timer.Start();
         }
 
-        private void UpdateColor(SaveStateManager.ColorCode color)
-        {
-            _frameName.ForeColor = color switch
-            {
-                SaveStateManager.ColorCode.Clean => Color.AliceBlue,
-                SaveStateManager.ColorCode.SaveRequested => Color.Aqua,
-                SaveStateManager.ColorCode.Dirty => Color.DarkSalmon,
-                _ => Color.Red
-            };
-        }
 
         private void RefreshState()
         {
