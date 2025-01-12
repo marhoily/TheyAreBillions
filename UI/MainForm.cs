@@ -7,6 +7,7 @@ namespace UI
     public partial class MainForm : Form
     {
         private bool _isDirty;
+        private Exception? _lastError;
 
         public MainForm()
         {
@@ -19,37 +20,85 @@ namespace UI
             }).Build();
 
             InitializeComponent();
+            HotkeyManager.Current.AddOrReplace("Error",
+                Keys.F1,
+                (_, _) =>
+                {
+                    try
+                    {
+                        _lastError = _lastError == null
+                            ? new Exception("Error Error Error Error Error Error Error Error Error \r\nError \r\nError \r\nError \r\n")
+                            : null;
+                    }
+                    catch (Exception x)
+                    {
+                        _lastError = x;
+                    }
+                });
+
 
             HotkeyManager.Current.AddOrReplace("Save",
                 Keys.F5,
                 (_, _) =>
                 {
-                    if (Lib.IsCurrentProcessTheyAreBillions())
-                        Lib.Save();
+                    try
+                    {
+                        if (Lib.IsCurrentProcessTheyAreBillions())
+                            Lib.Save();
+                        _lastError = null;
+                    }
+                    catch (Exception x)
+                    {
+                        _lastError = x;
+                    }
                 });
 
             HotkeyManager.Current.AddOrReplace("Remove Last",
                 Keys.Control | Keys.Alt | Keys.R,
                 (_, _) =>
                 {
-                    if (Lib.IsCurrentProcessTheyAreBillions())
-                        Lib.Remove();
+                    try
+                    {
+                        if (Lib.IsCurrentProcessTheyAreBillions())
+                            Lib.Remove();
+                        _lastError = null;
+                    }
+                    catch (Exception x)
+                    {
+                        _lastError = x;
+                    }
                 });
 
             HotkeyManager.Current.AddOrReplace("LoadGame",
                 Keys.F8,
                 (_, _) =>
                 {
-                    if (Lib.IsCurrentProcessTheyAreBillions())
-                        Lib.LoadGame();
+                    try
+                    {
+                        if (Lib.IsCurrentProcessTheyAreBillions())
+                            Lib.LoadGame();
+                        _lastError = null;
+                    }
+                    catch (Exception x)
+                    {
+                        _lastError = x;
+                    }
                 });
             var timer = new System.Windows.Forms.Timer();
             timer.Interval = 1000;
             timer.Tick += (_, _) =>
             {
-                RefreshState();
-                _frameName.ForeColor = _isDirty ?  
-                    Color.DarkSalmon : Color.Aqua;
+                try
+                {
+                    RefreshState();
+                    _frameName.ForeColor = _isDirty ?
+                        Color.DarkSalmon : Color.Aqua;
+                }
+                catch (Exception x)
+                {
+                    _lastError = x;
+                }
+                _errorLabel.Text = _lastError?.Message ?? "";
             };
             timer.Start();
         }
@@ -79,6 +128,8 @@ namespace UI
                 .All(x => File.ReadAllBytes(x.First)
                     .SequenceEqual(File.ReadAllBytes(x.Second)));
             _frameName.Text = Path.GetFileName(currentFrame);
+
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)

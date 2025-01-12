@@ -10,14 +10,22 @@ public static class Lib
 
     public static void LoadGame()
     {
-        var saveFiles = GetSaveFiles();
-        if (saveFiles != null)
-            foreach (var f in saveFiles)
-                File.Delete(f);
-        var frame = GetCurrentFrame();
-        if (frame == null) return;
-        foreach (var f in Directory.GetFiles(frame))
-            File.Copy(f, f.Replace(frame, Saves), true);
+        try
+        {
+            var saveFiles = GetSaveFiles();
+            if (saveFiles != null)
+                foreach (var f in saveFiles)
+                    File.Delete(f);
+            var frame = GetCurrentFrame();
+            if (frame == null) return;
+            foreach (var f in Directory.GetFiles(frame))
+                File.Copy(f, f.Replace(frame, Saves), true);
+        }
+        catch
+        {
+            // ignore
+        }
+
     }
 
     public static void Save()

@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             _frameName = new Label();
             _folderName = new Label();
+            _errorLabel = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -46,6 +47,19 @@
             _frameName.TabIndex = 1;
             _frameName.Text = "007";
             _frameName.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // _errorLabel
+            // 
+            _errorLabel.AutoSize = true;
+            _errorLabel.Dock = DockStyle.Fill;
+            _errorLabel.Font = new Font("Arial", 24F, FontStyle.Regular, GraphicsUnit.Point);
+            _errorLabel.ForeColor = Color.OrangeRed;
+            _errorLabel.Location = new Point(757, 591);
+            _errorLabel.Name = "_errorLabel";
+            _errorLabel.Size = new Size(748, 591);
+            _errorLabel.TabIndex = 2;
+            _errorLabel.Text = "007";
+            _errorLabel.TextAlign = ContentAlignment.BottomCenter;
             // 
             // _folderName
             // 
@@ -67,6 +81,7 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
             tableLayoutPanel1.Controls.Add(_folderName, 1, 0);
             tableLayoutPanel1.Controls.Add(_frameName, 1, 1);
+            tableLayoutPanel1.Controls.Add(_errorLabel, 1, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -95,6 +110,7 @@
         }
 
         #endregion
+        private Label _errorLabel;
         private Label _frameName;
         private Label _folderName;
         private TableLayoutPanel tableLayoutPanel1;
