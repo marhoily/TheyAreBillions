@@ -24,7 +24,7 @@ namespace UI
                 Keys.F5,
                 (_, _) =>
                 {
-//if (Lib.IsCurrentProcessTheyAreBillions())
+                    if (Lib.IsCurrentProcessTheyAreBillions())
                         Lib.Save();
                 });
 
