@@ -44,7 +44,10 @@ namespace UI
                     try
                     {
                         if (Lib.IsCurrentProcessTheyAreBillions())
-                            Lib.Save();
+                            {
+                                Lib.Save();
+                                _frameName.ForeColor = Color.Aqua;
+                            }
                         _lastError = null;
                     }
                     catch (Exception x)
@@ -76,7 +79,10 @@ namespace UI
                     try
                     {
                         if (Lib.IsCurrentProcessTheyAreBillions())
-                            Lib.LoadGame();
+                            {
+                                Lib.LoadGame();
+                                _frameName.ForeColor = Color.Aqua;
+                            }
                         _lastError = null;
                     }
                     catch (Exception x)
@@ -92,7 +98,7 @@ namespace UI
                 {
                     RefreshState();
                     _frameName.ForeColor = _isDirty ?
-                        Color.DarkSalmon : Color.Aqua;
+                        Color.DarkSalmon : Color.AliceBlue;
                 }
                 catch (Exception x)
                 {
